@@ -1,16 +1,16 @@
 import { createFrames, Button } from "frames.js/next";
-import TrainInterface from "@/core/ui/train/screen";
+import Benchmark from "@/core/ui/benchmark";
 
 const frames = createFrames();
 
 const handleRequest = frames(async (ctx) => {
   return {
-    image: <TrainInterface />,
+    image: <Benchmark />,
     imageOptions: {
       aspectRatio: "1:1",
     },
     buttons: [
-      <Button key="b1" action="post" target="benchmark">
+      <Button key="b1" action="post">
         BENCHMARK
       </Button>,
       <Button key="b2" action="post">
