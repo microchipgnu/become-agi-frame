@@ -6,6 +6,13 @@ import {
 } from "frames.js/next/server";
 import { State } from "../../../types";
 
+
+
+
+
+
+
+
 const Share = ({
   state,
   previousFrame,
