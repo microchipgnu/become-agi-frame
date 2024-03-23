@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Fira_Code } from "next/font/google";
 import "@/app/globals.css";
 
-const fontSans = localFont({
-  src: "./FiraCode-Regular.ttf",
-  variable: "--font-sans",
-  weight: "400",
-});
+const firaCode = Fira_Code({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "b{AGI}",
@@ -20,11 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`min-h-screen bg-background font-sans antialiased ${fontSans.variable}`}
-      >
-        {children}
-      </body>
+      <body className={`bg-background ${firaCode.className}`}>{children}</body>
     </html>
   );
 }

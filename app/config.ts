@@ -1,6 +1,5 @@
 import { join } from "path";
 import * as fs from "fs";
-import { ImageResponse } from "next/server";
 
 const fontRegularPath = join(process.cwd(), "./app/FiraCode-Regular.ttf");
 const fontBoldPath = join(process.cwd(), "./app/FiraCode-Bold.ttf");
