@@ -17,7 +17,7 @@ const handleRequest = frames(async (ctx) => {
         </div>
       ),
       buttons: [
-        <Button key={"launch"} action="post" target={`share/${requesterFid}`}>
+        <Button key={"launch"} action="post" target={`share`}>
           SHARE BUTTON
         </Button>,
       ],
@@ -30,8 +30,17 @@ const handleRequest = frames(async (ctx) => {
         </div>
       ),
       buttons: [
-        <Button key={"launch"} action="post" target={`game/${requesterFid}`}>
+        <Button key={"launch"} action="post" target={`game`}>
           GAME BUTTON
+        </Button>,
+        <Button
+          key={"distribute"}
+          action="link"
+          target={
+            "https://warpcast.com/~/compose?embeds%5B%5D=https%3A%2F%2Fframes.airstack.xyz%2Ftt&text=hihi%2C+see+what+tokens+are+trending+right+now+on+Farcaster"
+          }
+        >
+          DISTRIBUTE
         </Button>,
       ],
     };
