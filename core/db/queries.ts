@@ -169,6 +169,60 @@ export const fetchBenchmark = async (fid: number) => {
   }
 };
 
+export const updatePoints = async (
+  fid: number,
+  points: number,
+  operation: "increment" | "decrement",
+) => {
+  const operationSQL =
+    operation === "increment" ? "points + $1" : "points - $1";
+
+  const UPDATE_USER_POINTS = `
+    UPDATE becomeagi_users
+    SET points = ${operationSQL}
+    WHERE fid = $2
+    RETURNING *;
+  `;
+
+  try {
+    const { rows } = await pool.query(UPDATE_USER_POINTS, [
+      Math.abs(points),
+      fid,
+    ]);
+    if (rows.length === 0) {
+      console.log("User not found or no update necessary.");
+      return null;
+    }
+    return rows[0];
+  } catch (error) {
+    console.error("Error updating user points:", error);
+    throw error;
+  }
+};
+
+export const insertUserIfNotExists = async (fid: number) => {
+  const INSERT_USER_IF_NOT_EXISTS = `
+    INSERT INTO becomeagi_users (fid)
+    VALUES ($1)
+    ON CONFLICT (fid) DO NOTHING
+    RETURNING *;
+  `;
+
+  try {
+    const { rows } = await pool.query(INSERT_USER_IF_NOT_EXISTS, [fid]);
+    if (rows.length) {
+      console.log("User inserted:", rows[0]);
+      return rows[0]; // Return the inserted row
+    } else {
+      console.log("User already exists or insertion was skipped.");
+      return null; // Return null if the user already exists
+    }
+  } catch (error) {
+    console.error("Error attempting to insert user:", fid, error);
+    throw error;
+  }
+};
+
 // console.log(await createAndStoreDataset())
 // console.table(await fetchCurrentDataset())
 // console.log(await fetchCurrentDataset())
