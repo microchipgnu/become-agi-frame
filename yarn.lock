@@ -3654,10 +3654,21 @@ fraction.js@^4.3.7:
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.3.7.tgz#06ca0085157e42fda7f9e726e79fefc4068840f7"
   integrity sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==
 
-frames.js@^0.9.0, frames.js@^0.9.3:
+frames.js@^0.9.0:
   version "0.9.3"
   resolved "https://registry.yarnpkg.com/frames.js/-/frames.js-0.9.3.tgz#83226e414968a2529d996d5c3f3560655848d288"
   integrity sha512-E3SOjHJCji7y4jpmuERERnp5LfWFN6pf+38gfD0Y41eEWCUY+qIpD+Rk6lBa8gh/nhB5uXT4oBDf5ug/WgAndw==
+  dependencies:
+    "@farcaster/core" "^0.14.7"
+    "@vercel/og" "^0.6.2"
+    cheerio "^1.0.0-rc.12"
+    protobufjs "^7.2.6"
+    viem "^2.7.8"
+
+frames.js@^0.9.5:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/frames.js/-/frames.js-0.9.5.tgz#f80b9785a633f78eeb255121e3b9116e72095602"
+  integrity sha512-PsSyxXjujb9DxCo53WmCz1yUiMJQY8PB4hIRmfFnPAS4wF8APi5p6FOLjdMwlWMTeZQboWuCDl3M2aIA/NtvHw==
   dependencies:
     "@farcaster/core" "^0.14.7"
     "@vercel/og" "^0.6.2"
