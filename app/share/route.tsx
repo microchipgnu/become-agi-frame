@@ -8,7 +8,7 @@ export const handleShareRequest = frames(async (ctx) => {
   return {
     image: (
       <div tw="flex w-full h-full bg-slate-700 text-white justify-center items-center">
-        {requesterFid} SHARE IMAGE 2-INFINITY
+        SHARE PAGE IMAGE
       </div>
     ),
     buttons: [
