@@ -12,6 +12,9 @@ const handleRequest = frames(async (ctx) => {
           SHARE COVER
         </div>
       ),
+      imageOptions: {
+        aspectRatio: "1:1",
+      },
       buttons: [
         <Button key="b1" action="post" target="share">
           VIEW
@@ -25,6 +28,9 @@ const handleRequest = frames(async (ctx) => {
           FRAME COVER
         </div>
       ),
+      imageOptions: {
+        aspectRatio: "1:1",
+      },
       buttons: [
         <Button key="b1" action="post" target="game">
           LAUNCH

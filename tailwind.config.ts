@@ -28,6 +28,9 @@ const config = {
       },
     },
     extend: {
+      width: {
+        "30": "30%",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -1,14 +1,14 @@
 import { createFrames, Button } from "frames.js/next";
+import TrainInterface from "../../core/ui/train/screen";
 
 const frames = createFrames();
 
 const handleRequest = frames(async (ctx) => {
   return {
-    image: (
-      <div tw="w-full h-full bg-slate-700 text-white justify-center items-center">
-        MAIN APP
-      </div>
-    ),
+    image: <TrainInterface />,
+    imageOptions: {
+      aspectRatio: "1:1",
+    },
     buttons: [
       <Button key="b1" action="post">
         BENCHMARK
