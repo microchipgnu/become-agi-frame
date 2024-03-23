@@ -1,10 +1,15 @@
 import { createFrames, Button } from "frames.js/next";
+import { fetchUser } from "@/core/db/queries";
 
 const frames = createFrames();
 
 export const handleShareRequest = frames(async (ctx) => {
   const injectNoise = ctx?.searchParams?.injectNoise;
   console.log("share ctx.message", ctx?.message);
+
+  // create share request on db
+  const user = await fetchUser(ctx?.message?.requesterFid);
+  console.log("user", user);
 
   const { requesterFid } = ctx?.message || {};
   return {
