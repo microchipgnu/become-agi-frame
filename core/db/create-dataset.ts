@@ -83,7 +83,7 @@ const hash = async (grid: GridItem[]) => {
 export const createDataset = async (): Promise<Dataset> => {
   const grid: GridItem[] = [];
 
-  for (let i = 0; i < 128; i++) {
+  for (let i = 0; i < 32; i++) {
     const rarity = getRandomRarity();
     const abilityName = getAbilityBasedOnRarity(rarity.id);
 

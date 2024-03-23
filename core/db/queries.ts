@@ -22,11 +22,12 @@ const CREATE_DATASET_TABLE = `
 const CREATE_USER_TABLE = `
   CREATE TABLE IF NOT EXISTS becomeagi_users (
     id SERIAL PRIMARY KEY,
-    fid INTEGER NOT NULL,
+    fid INTEGER NOT NULL UNIQUE,
     points INTEGER NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 `;
+
 const DROP_DATASET_TABLE = `DROP TABLE becomeagi_dataset;`;
 const DROP_USER_TABLE = `DROP TABLE becomeagi_users;`;
 
@@ -63,9 +64,9 @@ export const createAndStoreDataset = async () => {
 
 export const fetchCurrentDataset = async () => {
   const FETCH_DATASET = `
-    SELECT id, position, status, accesses FROM becomeagi_dataset
+    SELECT id, position, status, accesses, hash FROM becomeagi_dataset
     ORDER BY created_at DESC, position ASC
-    LIMIT 128
+    LIMIT 32
   `;
 
   const { rows } = await pool.query(FETCH_DATASET);
@@ -223,8 +224,42 @@ export const insertUserIfNotExists = async (fid: number) => {
   }
 };
 
+export const getOrCreateUserWithMap = async (fid: number) => {
+  const GET_OR_CREATE_USER = `
+    WITH user_upsert AS (
+      INSERT INTO becomeagi_users (fid)
+      VALUES ($1)
+      ON CONFLICT (fid) DO NOTHING
+      RETURNING id, fid, points, created_at
+    ), user_data AS (
+      SELECT id, fid, points, created_at FROM user_upsert
+      UNION ALL
+      SELECT id, fid, points, created_at FROM becomeagi_users WHERE fid = $1 AND NOT EXISTS (SELECT 1 FROM user_upsert)
+    )
+    SELECT * FROM user_data;
+  `;
+
+  // Attempt to run the combined operation
+  try {
+    const { rows } = await pool.query(GET_OR_CREATE_USER, [fid]);
+    if (rows.length === 0) {
+      throw new Error("User could not be retrieved or created.");
+    }
+    const latestMap = await fetchCurrentDataset();
+    return {
+      user: rows[0],
+      dataset: latestMap,
+    };
+  } catch (error) {
+    console.error("Error getting or creating user with map:", error);
+    throw error;
+  }
+};
+
 // console.log(await createAndStoreDataset())
 // console.table(await fetchCurrentDataset())
 // console.log(await fetchCurrentDataset())
-// console.table(await dropTable())
-// console.table(await createTable())
+// console.table(await dropDatasetTable())
+// console.table(await createDatasetTable())
+// await dropUserTable()
+// await createUserTable()
