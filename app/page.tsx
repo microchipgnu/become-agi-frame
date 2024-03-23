@@ -27,7 +27,7 @@ export default async function Home({ searchParams }: NextServerPageProps) {
   const previousFrame = getPreviousFrame<State>(searchParams);
 
   const frameMessage = await getFrameMessage(previousFrame.postBody, {
-    hubHttpUrl: process.env.NEXT_PUBLIC_HOST?.startsWith("http://localhost:3000") ? DEFAULT_DEBUGGER_HUB_URL : "https://hub.freefarcasterhub.com:3281",
+    hubHttpUrl: process.env.NEXT_PUBLIC_HOST?.startsWith("http://localhost:3000") ? DEFAULT_DEBUGGER_HUB_URL : "https://hub.pinata.cloud",
   });
 
   if (frameMessage && !frameMessage?.isValid) {

@@ -12,6 +12,7 @@ export interface Rarity {
 export interface GridItem {
   position: string; // Adjust types as necessary
   status: string;
+  
 }
 
 export interface Dataset {
