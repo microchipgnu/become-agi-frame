@@ -9,7 +9,11 @@ const handleRequest = frames(async (ctx) => {
         COVER
       </div>
     ),
-    buttons: [<Button action="post">LAUNCH</Button>],
+    buttons: [
+      <Button key={"launch"} action="post" target={"share/1"}>
+        LAUNCH
+      </Button>,
+    ],
   };
 });
 

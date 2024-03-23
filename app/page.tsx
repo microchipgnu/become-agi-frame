@@ -5,7 +5,7 @@ export async function generateMetadata() {
     title: "b{AGI}",
     other: await fetchMetadata(
       new URL(
-        "/frames",
+        "/splash",
         process.env.VERCEL_URL
           ? `https://${process.env.VERCEL_URL}`
           : "http://localhost:3000",

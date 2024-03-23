@@ -6,10 +6,14 @@ const handleRequest = frames(async (ctx) => {
   return {
     image: (
       <div tw="w-full h-full bg-slate-700 text-white justify-center items-center">
-        SHARED
+        SHARE
       </div>
     ),
-    buttons: [<Button action="post">LAUNCH</Button>],
+    buttons: [
+      <Button key={"launch"} action="post">
+        SHARE BUTTON
+      </Button>,
+    ],
   };
 });
 
