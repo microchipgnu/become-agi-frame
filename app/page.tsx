@@ -15,5 +15,17 @@ export async function generateMetadata() {
 }
 
 export default function Home() {
-  return <div>{`b{AGI}`}</div>;
+  return (
+    <div className="bg-customDark text-white min-h-screen flex flex-col justify-top items-center">
+      <img src="/becomeAGI.svg" alt="Logo" className="w-40 h-40 mb-8" />
+
+      <div className="w-full max-w-2xl flex flex-col items-left">
+        <h1 className="font-fira-code font-bold text-xl mb-4">GOAL</h1>
+
+        <p className="font-fira-code font-normal text-m">
+          Become AGI by training your model.
+        </p>
+      </div>
+    </div>
+  );
 }
