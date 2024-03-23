@@ -16,7 +16,7 @@ const handleRequest = frames(async (ctx) => {
       <Button key="train" action="post">
         TRAIN
       </Button>,
-      <Button key="distribute" action="post">
+      <Button key="distribute" action="post" target="share">
         DISTRIBUTE
       </Button>,
     ],
