@@ -10,17 +10,8 @@ import Train from "../core/components/screens/train";
 import { State } from "../core/types";
 import { DEFAULT_DEBUGGER_HUB_URL } from "./debug";
 import { currentURL } from "./utils";
+import { reducer, initialState } from "../core/reducer";
 
-const initialState = { active: "1", total_button_presses: 0 };
-
-const reducer: FrameReducer<State> = (state, action) => {
-  return {
-    total_button_presses: state.total_button_presses + 1,
-    active: action.postBody?.untrustedData.buttonIndex
-      ? String(action.postBody?.untrustedData.buttonIndex)
-      : "1",
-  };
-};
 
 export default async function Home({ searchParams }: NextServerPageProps) {
   const url = currentURL("/");
@@ -43,7 +34,6 @@ export default async function Home({ searchParams }: NextServerPageProps) {
   if (!frameMessage) {
     return <Cover state={state} previousFrame={previousFrame} />
   }
-
 
 
   return (
