@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "update-debugger": "npx degit github:framesjs/frames.js/examples/framesjs-starter/app/debug#main app/debug --force",
-    "update-framesjs": "yarn upgrade frames.js@latest && yarn run update-debugger"
+    "update-framesjs": "yarn upgrade frames.js@latest && yarn run update-debugger",
+    "prepare": "husky"
   },
   "dependencies": {
     "@farcaster/core": "^0.14.3",
@@ -41,9 +42,14 @@
     "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "postcss": "^8",
     "prettier": "3.2.5",
     "tailwindcss": "^3.3.0",
     "typescript": "^5.3.3"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
