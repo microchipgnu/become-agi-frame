@@ -5,12 +5,12 @@ const frames = createFrames();
 const handleRequest = frames(async (ctx) => {
   return {
     image: (
-      <div tw="w-full h-full bg-slate-700 text-white justify-center items-center">
-        GAME
+      <div tw="flex w-full h-full bg-slate-700 text-white justify-center items-center">
+        GAME IMAGE 2-INFINITY
       </div>
     ),
     buttons: [
-      <Button key={"launch"} action="post" target={"redirect"}>
+      <Button key={"launch"} action="post">
         GAME BUTTON
       </Button>,
     ],
