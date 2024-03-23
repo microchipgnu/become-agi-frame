@@ -18,13 +18,23 @@ const CREATE_DATASET_TABLE = `
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 `
-const DROP_DATASET_TABLE = `DROP TABLE becomeagi_dataset;`
 
-const createTable = async () => {
+const CREATE_USER_TABLE = `
+  CREATE TABLE IF NOT EXISTS becomeagi_users (
+    id SERIAL PRIMARY KEY,
+    fid INTEGER NOT NULL,
+    points INTEGER NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+`
+const DROP_DATASET_TABLE = `DROP TABLE becomeagi_dataset;`
+const DROP_USER_TABLE = `DROP TABLE becomeagi_users;`
+
+const createDatasetTable = async () => {
   await pool.query(CREATE_DATASET_TABLE);
 }
 
-const dropTable = async () => {
+const dropDatasetTable = async () => {
   await pool.query(DROP_DATASET_TABLE);
 }
 
@@ -75,6 +85,82 @@ export const incrementAccesses = async (id: number) => {
     return rows[0];
   } catch (error) {
     console.error("Error incrementing accesses for ID:", id, error);
+    throw error;
+  }
+};
+
+
+export const createUserTable = async () => {
+  await pool.query(CREATE_USER_TABLE);
+}
+
+export const dropUserTable = async () => {
+  await pool.query(DROP_USER_TABLE);
+}
+
+export const insertUser = async (fid: number) => {
+  const INSERT_USER = `
+    INSERT INTO becomeagi_users (fid)
+    VALUES ($1)
+    RETURNING *;
+  `;
+
+  try {
+    const { rows } = await pool.query(INSERT_USER, [fid]);
+    return rows[0];
+  }
+  catch (error) {
+    console.error("Error inserting user:", fid, error);
+    throw error;
+  }
+}
+
+export const fetchUser = async (fid: number) => {
+  const FETCH_USER = `
+    SELECT * FROM becomeagi_users
+    WHERE fid = $1
+  `;
+
+  const { rows } = await pool.query(FETCH_USER, [fid]);
+
+  return rows
+}
+
+export const fetchBenchmark = async (fid: number) => {
+  // Fetch the top 10 users
+  const FETCH_TOP_USERS = `
+    SELECT *, RANK() OVER (ORDER BY points DESC) as rank
+    FROM becomeagi_users
+    ORDER BY points DESC
+    LIMIT 10;
+  `;
+
+  // Fetch the specific user's position
+  const FETCH_USER_POSITION = `
+    SELECT rank FROM (
+      SELECT fid, RANK() OVER (ORDER BY points DESC) as rank
+      FROM becomeagi_users
+    ) as ranked_users
+    WHERE fid = $1;
+  `;
+
+  try {
+    const topUsersPromise = pool.query(FETCH_TOP_USERS);
+    const userPositionPromise = pool.query(FETCH_USER_POSITION, [fid]);
+
+    // Use Promise.all to execute both queries concurrently
+    const [topUsersResult, userPositionResult] = await Promise.all([topUsersPromise, userPositionPromise]);
+
+    // Extract the rows from the query results
+    const topUsers = topUsersResult.rows;
+    const userPosition = userPositionResult.rows[0] ? userPositionResult.rows[0].rank : 'Not in leaderboard';
+
+    return {
+      topUsers,
+      userPosition
+    };
+  } catch (error) {
+    console.error("Error fetching benchmark data:", error);
     throw error;
   }
 };
