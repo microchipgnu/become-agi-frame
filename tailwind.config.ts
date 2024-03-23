@@ -31,12 +31,20 @@ const config = {
       width: {
         "30": "30%",
       },
+      fontFamily: {
+        "fira-code": ["FiraCode", "monospace"],
+      },
+      fontWeight: {
+        normal: "400",
+        bold: "700",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        customDark: "#020C17",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
