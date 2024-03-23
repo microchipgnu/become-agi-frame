@@ -57,6 +57,7 @@ const TrainInterface = () => {
           src={
             "https://wrpcd.net/cdn-cgi/image/fit=contain,f=auto,w=168/https%3A%2F%2Fi.imgur.com%2FhvaOPrU.jpg"
           }
+          alt="train"
           tw="h-20 w-20 mr-4 rounded"
         />
         <ProgressBar progress={progress} />

@@ -13,12 +13,15 @@ export const handleShareRequest = frames(async (ctx) => {
         <p>SHARE RESULT IMAGE</p>
       </div>
     ),
+    imageOptions: {
+      aspectRatio: "1:1",
+    },
     buttons: [
       <Button key="b1" action="post">
-        HOME
+        REFRESH
       </Button>,
       <Button key="b2" action="post">
-        BENCHMARKS
+        DOWNLOAD DATA
       </Button>,
     ],
   };

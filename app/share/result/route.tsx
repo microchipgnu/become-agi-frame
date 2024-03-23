@@ -14,6 +14,9 @@ export const handleShareRequest = frames(async (ctx) => {
         <p>INJECT NOISE: {injectNoise}</p>
       </div>
     ),
+    imageOptions: {
+      aspectRatio: "1:1",
+    },
     buttons: [
       <Button
         key="b1"
