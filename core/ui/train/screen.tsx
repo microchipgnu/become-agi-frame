@@ -1,10 +1,3 @@
-const ProgressBar = ({ progress }: { progress: number }) => (
-  <div tw="flex bg-blue-800 h-full rounded items-center">
-    <div tw={`bg-blue-600 h-full w-${progress}/12 rounded`}></div>
-    <div tw="ml-4">10%</div>
-  </div>
-);
-
 const GridItem = ({ isRed }: { isRed: boolean }) => (
   <div
     tw={`w-24 h-24 rounded ${isRed ? "bg-red-500" : "bg-blue-800"} m-0.5`}

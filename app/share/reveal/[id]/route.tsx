@@ -10,15 +10,18 @@ export const handleShareRequest = frames(async (ctx) => {
     image: (
       <div tw="flex flex-col w-full h-full bg-slate-700 text-white justify-center items-center">
         <p>User {requesterFid}</p>
-        <p>SHARE PAGE IMAGE</p>
+        <p>SHARE RESULT IMAGE</p>
       </div>
     ),
+    imageOptions: {
+      aspectRatio: "1:1",
+    },
     buttons: [
       <Button key="b1" action="post">
-        REFRESH
+        HOME
       </Button>,
       <Button key="b2" action="post">
-        DOWNLOAD DATA
+        BENCHMARKS
       </Button>,
     ],
   };

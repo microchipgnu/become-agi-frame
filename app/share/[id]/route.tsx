@@ -11,6 +11,9 @@ export const handleShareRequest = frames(async (ctx) => {
         {requesterFid} SHARE IMAGE 2-INFINITY
       </div>
     ),
+    imageOptions: {
+      aspectRatio: "1:1",
+    },
     buttons: [
       <Button key="b1" action="post">
         SHARE BUTTON

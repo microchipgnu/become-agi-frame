@@ -1,5 +1,5 @@
 import { createFrames, Button } from "frames.js/next";
-import TrainInterface from "../../core/ui/train/screen";
+import TrainInterface from "@/core/ui/train/screen";
 
 const frames = createFrames();
 
