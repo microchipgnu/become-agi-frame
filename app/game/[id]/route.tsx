@@ -6,12 +6,12 @@ const handleRequest = frames(async (ctx) => {
   return {
     image: (
       <div tw="w-full h-full bg-slate-700 text-white justify-center items-center">
-        COVER
+        GAME
       </div>
     ),
     buttons: [
       <Button key={"launch"} action="post" target={"redirect"}>
-        LAUNCH
+        GAME BUTTON
       </Button>,
     ],
   };
