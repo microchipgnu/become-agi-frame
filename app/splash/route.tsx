@@ -1,4 +1,5 @@
 import { createFrames, Button } from "frames.js/next";
+import { defaultImageOptions } from "@/app/config";
 
 const frames = createFrames();
 
@@ -13,7 +14,7 @@ const handleRequest = frames(async (ctx) => {
         </div>
       ),
       imageOptions: {
-        aspectRatio: "1:1",
+        ...defaultImageOptions,
       },
       buttons: [
         <Button key="b1" action="post" target="share">
@@ -29,7 +30,7 @@ const handleRequest = frames(async (ctx) => {
         </div>
       ),
       imageOptions: {
-        aspectRatio: "1:1",
+        ...defaultImageOptions,
       },
       buttons: [
         <Button key="b1" action="post" target="game">

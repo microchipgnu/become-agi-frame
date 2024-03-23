@@ -1,5 +1,6 @@
 import { createFrames, Button } from "frames.js/next";
 import Benchmark from "@/core/ui/benchmark";
+import { defaultImageOptions } from "@/app/config";
 
 const frames = createFrames();
 
@@ -7,17 +8,11 @@ const handleRequest = frames(async (ctx) => {
   return {
     image: <Benchmark />,
     imageOptions: {
-      aspectRatio: "1:1",
+      ...defaultImageOptions,
     },
     buttons: [
-      <Button key="b1" action="post">
-        BENCHMARK
-      </Button>,
-      <Button key="b2" action="post">
-        TRAIN
-      </Button>,
-      <Button key="b3" action="post" target="share">
-        DISTRIBUTE
+      <Button key="b1" action="post" target="game">
+        HOME
       </Button>,
     ],
   };
