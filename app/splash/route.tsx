@@ -8,7 +8,7 @@ const handleRequest = frames(async (ctx) => {
   if (isPosterSharing) {
     return {
       image: (
-        <div tw="flex w-full h-full bg-slate-700 text-white justify-center items-center">
+        <div tw="flex w-full h-full bg-[#020C17] text-white justify-center items-center">
           SHARE COVER
         </div>
       ),
@@ -24,7 +24,7 @@ const handleRequest = frames(async (ctx) => {
   } else {
     return {
       image: (
-        <div tw="flex w-full h-full bg-slate-700 text-white justify-center items-center">
+        <div tw="flex w-full h-full bg-[#020C17] text-white justify-center items-center">
           FRAME COVER
         </div>
       ),
