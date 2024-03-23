@@ -1,4 +1,5 @@
 import { createFrames, Button } from "frames.js/next";
+import { defaultImageOptions } from "../config";
 
 const frames = createFrames();
 
@@ -8,13 +9,13 @@ export const handleShareRequest = frames(async (ctx) => {
   const { requesterFid } = ctx?.message || {};
   return {
     image: (
-      <div tw="flex flex-col w-full h-full bg-slate-700 text-white justify-center items-center">
+      <div tw="flex flex-col w-full h-full bg-[#020C17] text-white justify-center items-center">
         <p>User {requesterFid}</p>
         <p>SHARE PAGE IMAGE</p>
       </div>
     ),
     imageOptions: {
-      aspectRatio: "1:1",
+      ...defaultImageOptions,
     },
     buttons: [
       <Button key="b1" action="post" target="share/result?injectNoise=true">

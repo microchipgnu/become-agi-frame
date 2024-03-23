@@ -87,12 +87,19 @@ const Divider = ({
 };
 
 const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
-  const userCurrentRow = dataset.accessedRow;
-  const rows = dataset.rows;
+  if (!dataset || !user) {
+    return (
+      <div tw="w-full h-full bg-[#020C17] text-white justify-center items-center">
+        NO DATA
+      </div>
+    );
+  }
+  const userCurrentRow = dataset?.accessedRow;
+  const rows = dataset?.rows;
   const gridRows = 8;
   const gridCols = 4;
 
-  incrementAccesses(userCurrentRow.id);
+  incrementAccesses(userCurrentRow?.id);
 
   updatePoints(
     user.fid,
@@ -108,7 +115,7 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
     })),
   );
 
-  rows.forEach(
+  rows?.forEach(
     (row: {
       id: number;
       status: string;
@@ -134,9 +141,9 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
         <div tw="flex justify-between">
           {/* Dataset Grid */}
           <div tw="flex flex-col">
-            {grid.map((row, rowIndex) => (
+            {grid?.map((row, rowIndex) => (
               <div key={rowIndex} tw="flex mt-2">
-                {row.map((cell, cellIndex) => (
+                {row?.map((cell, cellIndex) => (
                   <GridItem
                     key={cellIndex}
                     accesses={cell?.accesses || 0}
@@ -156,7 +163,7 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                   <div tw="flex items-center justify-between">
                     <div tw="flex text-3xl text-[#6D88C7]">DATASET</div>
                     <div tw="flex text-3xl text-white">
-                      {`${userCurrentRow.hash.slice(0, 4)}...${userCurrentRow.hash.slice(-4)}` ||
+                      {`${userCurrentRow?.hash?.slice(0, 4)}...${userCurrentRow?.hash?.slice(-4)}` ||
                         ""}
                     </div>
                   </div>
@@ -182,7 +189,7 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                 <div tw="flex items-center justify-between">
                   <div tw="flex text-3xl text-[#6D88C7]">BYTE</div>
                   <div tw="flex text-3xl text-white">
-                    {userCurrentRow.position}
+                    {userCurrentRow?.position}
                   </div>
                 </div>
                 <Divider color="[#09376C]" />
@@ -193,7 +200,7 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                     TYPE
                   </div>
                   <div tw="flex text-3xl text-[#6D88C7]">
-                    {userCurrentRow.status}
+                    {userCurrentRow?.status}
                   </div>
                 </div>
               </div>
@@ -229,6 +236,7 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
         <div tw="flex items-center w-full">
           <img
             src="https://wrpcd.net/cdn-cgi/image/fit=contain,f=auto,w=168/https%3A%2F%2Fi.imgur.com%2FhvaOPrU.jpg"
+            alt="user"
             tw="h-20 w-20 mr-4 rounded"
           />
           <div tw="flex bg-blue-800 h-full rounded items-center border flex-grow bg-[#031222]">

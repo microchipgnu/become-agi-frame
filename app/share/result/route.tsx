@@ -1,5 +1,6 @@
 import { createFrames, Button } from "frames.js/next";
 import { fetchUser } from "@/core/db/queries";
+import { defaultImageOptions } from "@/app/config";
 
 const frames = createFrames();
 
@@ -14,13 +15,13 @@ export const handleShareRequest = frames(async (ctx) => {
   const { requesterFid } = ctx?.message || {};
   return {
     image: (
-      <div tw="flex flex-col w-full h-full bg-slate-700 text-white justify-center items-center">
+      <div tw="flex flex-col w-full h-full bg-[#020C17] text-white justify-center items-center">
         <p>User {requesterFid} DISTRIBUTING DATA</p>
         <p>INJECT NOISE: {injectNoise}</p>
       </div>
     ),
     imageOptions: {
-      aspectRatio: "1:1",
+      ...defaultImageOptions,
     },
     buttons: [
       <Button
