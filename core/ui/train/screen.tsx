@@ -1,4 +1,4 @@
-import { incrementAccesses } from "@/core/db/queries";
+import { incrementAccesses, updatePoints } from "@/core/db/queries";
 
 const byteStatusToColor = (numberAccesses: number) => {
   if (numberAccesses === 0) {
@@ -94,6 +94,12 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
 
   incrementAccesses(userCurrentRow.id);
 
+  updatePoints(
+    user.fid,
+    1,
+    userCurrentRow.status === "Noise" ? "decrement" : "increment",
+  );
+
   const grid = Array.from({ length: gridRows }, () =>
     Array.from({ length: gridCols }, () => ({
       isNoise: false, // default value
@@ -122,8 +128,6 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
     },
   );
 
-  const progress = 23;
-
   return (
     <div tw="flex w-full h-full flex-col bg-[#020C17]">
       <div tw="flex flex-row flex-grow w-full items-center justify-between px-12">
@@ -135,7 +139,7 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                 {row.map((cell, cellIndex) => (
                   <GridItem
                     key={cellIndex}
-                    accesses={cell.accesses}
+                    accesses={cell?.accesses || 0}
                     isRed={cell.isNoise}
                     isCurrentPosition={cell.isCurrentPosition}
                   />
@@ -206,7 +210,13 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                   <div tw="flex text-3xl text-[#6D88C7] justify-between">
                     INTEGRITY
                   </div>
-                  <div tw="flex text-3xl text-[#6D88C7]">Pristine-100%</div>
+                  <div tw="flex text-3xl text-[#6D88C7]">
+                    {" "}
+                    <div tw="flex text-3xl text-[#6D88C7]">
+                      {byteStatusToColor(userCurrentRow.accesses).name}=
+                      {byteStatusToColor(userCurrentRow.accesses).reward * 100}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -223,10 +233,10 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
           />
           <div tw="flex bg-blue-800 h-full rounded items-center border flex-grow bg-[#031222]">
             <div
-              tw="bg-blue-600 h-full rounded"
+              tw="bg-[#09376C] h-full rounded "
               style={{ width: `${user.points}%` }}
             ></div>
-            <div tw="ml-4 text-white">{user.points}</div>
+            <div tw="ml-4 text-white flex">{user.points.toString()}</div>
           </div>
         </div>
       </div>
