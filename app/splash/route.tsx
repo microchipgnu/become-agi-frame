@@ -13,7 +13,7 @@ const handleRequest = frames(async (ctx) => {
         </div>
       ),
       buttons: [
-        <Button key="launch" action="post" target="share">
+        <Button key="b1" action="post" target="share">
           VIEW
         </Button>,
       ],
@@ -26,7 +26,7 @@ const handleRequest = frames(async (ctx) => {
         </div>
       ),
       buttons: [
-        <Button key="launch" action="post" target="game">
+        <Button key="b1" action="post" target="game">
           LAUNCH
         </Button>,
       ],

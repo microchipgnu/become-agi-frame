@@ -15,10 +15,10 @@ export const handleShareRequest = frames(async (ctx) => {
     ),
     buttons: [
       <Button key="b1" action="post">
-        INJECT NOISE
+        REFRESH
       </Button>,
       <Button key="b2" action="post">
-        MAINTAIN INTEGRITY
+        DOWNLOAD DATA
       </Button>,
     ],
   };
