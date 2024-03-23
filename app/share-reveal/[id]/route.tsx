@@ -10,15 +10,15 @@ export const handleShareRequest = frames(async (ctx) => {
     image: (
       <div tw="flex flex-col w-full h-full bg-slate-700 text-white justify-center items-center">
         <p>User {requesterFid}</p>
-        <p>SHARE PAGE IMAGE</p>
+        <p>SHARE RESULT IMAGE</p>
       </div>
     ),
     buttons: [
-      <Button key="b1" action="post" target="share-result?injectNoise=true">
-        INJECT NOISE
+      <Button key="b1" action="post">
+        HOME
       </Button>,
-      <Button key="b2" action="post" target="share-result?injectNoise=false">
-        MAINTAIN INTEGRITY
+      <Button key="b2" action="post">
+        BENCHMARKS
       </Button>,
     ],
   };
