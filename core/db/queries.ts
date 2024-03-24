@@ -293,6 +293,25 @@ export const decrementPointsForAllUsers = async (decrementValue: number) => {
   }
 };
 
+export const fetchByteDataById = async (id: number) => {
+  const FETCH_DATASET_BY_ID = `
+    SELECT * FROM becomeagi_dataset
+    WHERE id = $1;
+  `;
+
+  try {
+    const { rows } = await pool.query(FETCH_DATASET_BY_ID, [id]);
+    if (rows.length === 0) {
+      console.log("Dataset record not found.");
+      return null;
+    }
+    return rows[0];
+  } catch (error) {
+    console.error("Error fetching dataset record by ID:", id, error);
+    throw error;
+  }
+};
+
 // console.log(await createAndStoreDataset())
 // console.table(await fetchCurrentDataset())
 // console.log(await fetchCurrentDataset())

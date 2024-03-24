@@ -82,7 +82,11 @@ const handleRequest = frames(async (ctx) => {
       <Button key="b1" action="post" target="benchmarks">
         BENCHMARKS
       </Button>,
-      <Button key="b2" action="post" target="share">
+      <Button
+        key="b2"
+        action="post"
+        target={`share?bid=${dataset?.accessedRow?.id}`}
+      >
         DISTRIBUTE
       </Button>,
       <Button key="b3" action="post">

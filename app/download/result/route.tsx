@@ -1,29 +1,70 @@
-import { createFrames, Button } from "frames.js/next";
-import { fetchSingleData, getOrCreateUserWithMap } from "@/core/db/queries";
-import { APP_URL, defaultImageOptions } from "@/app/config";
-import { createShareHash } from "@/core/db/actions";
+import { defaultImageOptions } from "@/app/config";
+import { sendEvent } from "@/core/analytics/pinata";
+import { getDownloadDataFromShareHash } from "@/core/db/actions";
+import { fetchByteDataById, updatePoints } from "@/core/db/queries";
+import {
+  NOISE_SLASH,
+  abilityToChanceAndReward,
+  byteStatusToColor,
+} from "@/core/ui/train/screen";
+import { fetchUserData } from "@/core/utils/fetch-social";
+import { getFrameMessage } from "frames.js";
+import { openframes } from "frames.js/middleware";
+import { Button, createFrames } from "frames.js/next";
 
-const frames = createFrames();
+const frames = createFrames({
+  middleware: [
+    openframes({
+      clientProtocol: {
+        id: "farcaster",
+        version: "vNext",
+      },
+      handler: {
+        isValidPayload: (body: JSON) => true,
+        getFrameMessage: async (body: JSON) => {
+          sendEvent(
+            "download-data",
+            {
+              ...body,
+            },
+            "becomeagi",
+          );
+
+          return {
+            ...body,
+          };
+        },
+      },
+    }),
+  ],
+});
 
 const handleRequest = frames(async (ctx) => {
-  const injectNoise = ctx?.searchParams?.injectNoise === "true";
-  const { requesterFid } = ctx?.message || {};
+  const hash = ctx?.searchParams?.hash;
+  const { fid } = ctx?.message?.untrustedData || {};
 
-  const { dataset } = await getOrCreateUserWithMap(ctx?.message?.requesterFid);
-  const { hash, position } = dataset.accessedRow;
+  const data = await getDownloadDataFromShareHash(hash!);
+  const sourceUserData = await fetchUserData(
+    Number(data.sourceFid),
+    process.env.PINATA_API_KEY!,
+  );
+  const { position, accesses, status } = await fetchByteDataById(data.id);
 
-  const shareHash = await createShareHash({
-    sourceFid: requesterFid,
-    gameHash: hash,
-    position,
-    hasNoise: injectNoise,
-  });
+  // @ts-ignore
+  const rarity = abilityToChanceAndReward[status].rarity;
+  const integrity = byteStatusToColor(accesses).name;
 
-  // Manually encode the URL part that needs to be a value of the embeds[] parameter
-  const encodedUrlValue = encodeURIComponent(`${APP_URL}/share/${shareHash}`);
+  const points =
+    byteStatusToColor(accesses).reward *
+    // @ts-ignore
+    abilityToChanceAndReward[status].reward;
 
-  // Construct the full URL and manually encode the brackets for the embeds[] parameter
-  const shareFrameUrl = `https://warpcast.com/~/compose?embeds%5B%5D=${encodedUrlValue}`;
+  // TODO: finish like, follow logic before incrementing and decrementing the points
+  updatePoints(
+    fid,
+    status === "Noise" ? NOISE_SLASH : points,
+    status === "Noise" ? "decrement" : "increment",
+  );
 
   return {
     accepts: [
@@ -37,20 +78,40 @@ const handleRequest = frames(async (ctx) => {
       },
     ],
     image: (
-      <div tw="flex flex-col w-full h-full bg-[#020C17] text-white justify-center items-center">
-        <p>User {requesterFid} DISTRIBUTING DATA</p>
-        <p>INJECT NOISE: {injectNoise}</p>
+      <div
+        tw={`flex w-full h-full flex-col ${data.hasNoise ? "bg-[#FF5C5C]" : "bg-[#4FCC4E]"}`}
+      >
+        <div tw="flex flex-col flex-grow justify-between border bg-[#020C17] m-12 p-12 rounded-xl">
+          <div tw="flex flex-col">
+            <div tw="flex text-white">{data?.position}</div>
+            <div tw="flex text-white mt-8">
+              <span tw="text-[#6D88C7]">TYPE:</span> <span>{status}</span>
+            </div>
+            <div tw="flex text-white">
+              <span tw="text-[#6D88C7]">RARITY:</span>{" "}
+              <span tw="text-[#D7BB8E]">{rarity}</span>
+            </div>
+            <div tw="flex text-white">
+              <span tw="text-[#6D88C7]">INTEGRITY:</span>{" "}
+              <span tw="text-[#D7BB8E] capitalize">{integrity}</span>
+            </div>
+            <div tw="flex text-white">
+              <span tw="text-[#6D88C7]">SOURCE:</span>{" "}
+              <span tw="text-[#D7BB8E]">@{sourceUserData?.data?.username}</span>
+            </div>
+          </div>
+        </div>
       </div>
     ),
     imageOptions: {
       ...defaultImageOptions,
     },
     buttons: [
-      <Button key="b1" action="link" target={shareFrameUrl}>
-        DISTRIBUTE
+      <Button key="b1" action="post" target="benchmarks">
+        BENCHMARKS
       </Button>,
       <Button key="b2" action="post" target="game">
-        HOME
+        TRAIN
       </Button>,
     ],
   };

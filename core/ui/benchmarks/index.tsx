@@ -43,7 +43,9 @@ const Benchmarks = ({
                   @{data.username}
                 </div>
               </div>
-              <div tw="flex text-[#D6FA58]">{Math.round(data.points)}%</div>
+              <div tw="flex text-[#D6FA58]">
+                {Math.min(Math.round(data.points), 100)}%
+              </div>
             </div>
           ),
         )}

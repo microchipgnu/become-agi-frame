@@ -1,6 +1,6 @@
 import { incrementAccesses, updatePoints } from "@/core/db/queries";
 
-const NOISE_SLASH = 5;
+export const NOISE_SLASH = 5;
 
 const getTimeLeftForNewDataset = () => {
   const now = new Date();
@@ -19,7 +19,7 @@ const getTimeLeftForNewDataset = () => {
   return `${String(minutesLeft).padStart(2, "0")}:${String(secondsLeft).padStart(2, "0")}`;
 };
 
-const byteStatusToColor = (numberAccesses: number) => {
+export const byteStatusToColor = (numberAccesses: number) => {
   if (numberAccesses === 0) {
     return { color: "#04162A", name: "pristine", reward: 1 }; // 100%
   } else if (numberAccesses === 1) {
@@ -57,7 +57,7 @@ const byteStatusToColor = (numberAccesses: number) => {
   }
 };
 
-const abilityToChanceAndReward = {
+export const abilityToChanceAndReward = {
   Perception: { chance: 40, reward: 1, rarity: "Common" },
   "Pattern Recognition": { chance: 10, reward: 2, rarity: "Uncommon" },
   "Decision Making": { chance: 10, reward: 2, rarity: "Uncommon" },
