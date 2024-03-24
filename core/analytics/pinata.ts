@@ -5,7 +5,7 @@ export const sendEvent = async (event: string, data: any, id: string) => {
       Authorization: `Bearer ${process.env.PINATA_API_KEY}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ event, data, frame_id: id }),
+    body: JSON.stringify({ custom_id: event, data, frame_id: id }),
   };
 
   fetch("https://api.pinata.cloud/farcaster/frames/interactions", options)
