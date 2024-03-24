@@ -54,11 +54,12 @@ function combineUserInfo(topUsers: any, fetchResults: any[]) {
     );
     if (fetchData) {
       return {
-        rank: user.rank,
-        fid: user.fid,
-        pfpUrl: fetchData.data.pfp_url,
-        username: fetchData.data.username,
-        points: user.points,
+        rank: user?.rank,
+        fid: user?.fid,
+        pfpUrl:
+          fetchData?.data?.pfp_url || "https://becomeagi.com/assets/cover.png",
+        username: fetchData?.data?.username,
+        points: user?.points || 0,
       };
     }
     // If no matching data is found, return some default or partial data
