@@ -105,9 +105,10 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
     byteStatusToColor(userCurrentRow?.accesses).reward *
     // @ts-ignore
     abilityToChanceAndReward[userCurrentRow?.status].reward;
+
   updatePoints(
     user.fid,
-    points,
+    userCurrentRow.status === "Noise" ? 10 : points,
     userCurrentRow.status === "Noise" ? "decrement" : "increment",
   );
 
@@ -207,7 +208,7 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                     TYPE
                   </div>
                   <div
-                    tw={`flex text-3xl ${userCurrentRow?.status === "Noise" ? "text-[#FF5C5C]" : "text-[#6D88C7]"}`}
+                    tw={`flex text-3xl ${userCurrentRow?.status === "Noise" ? "text-[#FF5C5C]" : "text-[#4FCC4E]"}`}
                   >
                     {userCurrentRow?.status}
                   </div>
@@ -219,12 +220,13 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                     RARITY
                   </div>
                   <div tw="flex text-3xl text-[#6D88C7]">
-                    {/** @ts-ignore */}
                     <span tw="text-[#D7BB8E]">
+                      {/** @ts-ignore */}
                       {abilityToChanceAndReward[userCurrentRow.status].rarity}
                     </span>
                     =
                     <span tw="text-[#D6FA58]">
+                      {/** @ts-ignore */}
                       {abilityToChanceAndReward[userCurrentRow.status].chance}%
                     </span>
                   </div>
@@ -236,13 +238,21 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                     INTEGRITY
                   </div>
                   <div tw="flex text-3xl text-[#6D88C7]">
-                    <span tw="text-[#D7BB8E] capitalize">
-                      {byteStatusToColor(userCurrentRow.accesses).name}
-                    </span>
-                    =
-                    <span tw="text-[#D6FA58]">
-                      {byteStatusToColor(userCurrentRow.accesses).reward * 100}%
-                    </span>
+                    {userCurrentRow.status === "Noise" ? (
+                      <div tw="flex">null</div>
+                    ) : (
+                      <div tw="flex">
+                        <span tw="text-[#D7BB8E] capitalize">
+                          {byteStatusToColor(userCurrentRow.accesses).name}
+                        </span>
+                        =
+                        <span tw="text-[#D6FA58]">
+                          {byteStatusToColor(userCurrentRow.accesses).reward *
+                            100}
+                          %
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
