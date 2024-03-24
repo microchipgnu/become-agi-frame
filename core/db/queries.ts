@@ -174,6 +174,19 @@ export const fetchBenchmark = async (fid: number) => {
   }
 };
 
+export const fetchSingleData = async (hash: string, position: string) => {
+  const FETCH_SINGLE_DATA = `
+    SELECT * FROM becomeagi_dataset
+    WHERE hash = $1 AND position = $2;
+  `;
+  try {
+    const { rows } = await pool.query(FETCH_SINGLE_DATA, [hash, position]);
+    return rows[0];
+  } catch (error) {
+    console.error("Error fetching grid item by hash and position:", error);
+    throw error;
+  }
+};
 export const updatePoints = async (
   fid: number,
   points: number, // Assumed to be positive for increment, negative for decrement

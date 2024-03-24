@@ -3,8 +3,10 @@ import { createFrames, Button } from "frames.js/next";
 
 const frames = createFrames();
 
-export const handleShareRequest = frames(async (ctx) => {
-  console.log("share ctx.message", ctx?.message);
+const handleRequest = frames(async (ctx) => {
+  // get [shareHash] from the dynamic route
+  console.log("viewshareresult ctx full", ctx);
+  console.log("viewshareresult ctx.message", ctx?.message);
 
   const { requesterFid } = ctx?.message || {};
   return {
@@ -19,14 +21,14 @@ export const handleShareRequest = frames(async (ctx) => {
     },
     buttons: [
       <Button key="b1" action="post">
-        HOME
+        REFRESH
       </Button>,
       <Button key="b2" action="post">
-        BENCHMARKS
+        DOWNLOAD DATA
       </Button>,
     ],
   };
 });
 
-export const GET = handleShareRequest;
-export const POST = handleShareRequest;
+export const GET = handleRequest;
+export const POST = handleRequest;

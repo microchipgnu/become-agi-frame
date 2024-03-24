@@ -1,6 +1,12 @@
 import { join } from "path";
 import * as fs from "fs";
 
+const { VERCEL_URL } = process.env;
+
+export const APP_URL = VERCEL_URL
+  ? `https://${VERCEL_URL}`
+  : "http://localhost:3000";
+
 const fontRegularPath = join(process.cwd(), "./app/FiraCode-Regular.ttf");
 const fontBoldPath = join(process.cwd(), "./app/FiraCode-Bold.ttf");
 export const fontDataRegular = fs.readFileSync(fontRegularPath);

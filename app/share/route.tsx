@@ -1,11 +1,10 @@
 import { createFrames, Button } from "frames.js/next";
-import { defaultImageOptions } from "../config";
+import { defaultImageOptions } from "@/app/config";
 
 const frames = createFrames();
 
-export const handleShareRequest = frames(async (ctx) => {
+const handleRequest = frames(async (ctx) => {
   console.log("share ctx.message", ctx?.message);
-
   const { requesterFid } = ctx?.message || {};
   return {
     image: (
@@ -28,5 +27,5 @@ export const handleShareRequest = frames(async (ctx) => {
   };
 });
 
-export const GET = handleShareRequest;
-export const POST = handleShareRequest;
+export const GET = handleRequest;
+export const POST = handleRequest;

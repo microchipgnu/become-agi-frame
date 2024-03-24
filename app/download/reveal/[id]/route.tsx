@@ -3,13 +3,15 @@ import { createFrames, Button } from "frames.js/next";
 
 const frames = createFrames();
 
-export const handleShareRequest = frames(async (ctx) => {
+const handleRequest = frames(async (ctx) => {
   console.log("share ctx.message", ctx?.message);
+
   const { requesterFid } = ctx?.message || {};
   return {
     image: (
-      <div tw="flex w-full h-full bg-[#020C17] text-white justify-center items-center">
-        {requesterFid} SHARE IMAGE 2-INFINITY
+      <div tw="flex flex-col w-full h-full bg-[#020C17] text-white justify-center items-center">
+        <p>User {requesterFid}</p>
+        <p>SHARE RESULT IMAGE</p>
       </div>
     ),
     imageOptions: {
@@ -17,11 +19,14 @@ export const handleShareRequest = frames(async (ctx) => {
     },
     buttons: [
       <Button key="b1" action="post">
-        SHARE BUTTON
+        HOME
+      </Button>,
+      <Button key="b2" action="post">
+        BENCHMARKS
       </Button>,
     ],
   };
 });
 
-export const GET = handleShareRequest;
-export const POST = handleShareRequest;
+export const GET = handleRequest;
+export const POST = handleRequest;
