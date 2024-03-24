@@ -1,5 +1,22 @@
 import { incrementAccesses, updatePoints } from "@/core/db/queries";
 
+const getTimeLeftForNewDataset = () => {
+  const now = new Date();
+  const nextHour = new Date();
+  nextHour.setHours(now.getHours() + 1);
+  nextHour.setMinutes(0);
+  nextHour.setSeconds(0);
+  nextHour.setMilliseconds(0);
+
+  // Convert both dates to their numeric timestamps before subtraction
+  const diff = nextHour.getTime() - now.getTime(); // difference in milliseconds
+
+  const minutesLeft = Math.floor(diff / 1000 / 60);
+  const secondsLeft = Math.floor((diff / 1000) % 60);
+
+  return `${String(minutesLeft).padStart(2, "0")}:${String(secondsLeft).padStart(2, "0")}`;
+};
+
 const byteStatusToColor = (numberAccesses: number) => {
   if (numberAccesses === 0) {
     return { color: "#04162A", name: "pristine", reward: 1 }; // 100%
@@ -183,7 +200,9 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                 <div tw="flex flex-col mb-2 mt-8">
                   <div tw="flex items-center justify-between">
                     <div tw="flex text-3xl text-[#6D88C7]">FRESH DATASET</div>
-                    <div tw="flex text-3xl text-[#6D88C7]">09:05:02</div>
+                    <div tw="flex text-3xl text-[#6D88C7]">
+                      {getTimeLeftForNewDataset()}
+                    </div>
                   </div>
                 </div>
               </div>
