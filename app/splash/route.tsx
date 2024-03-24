@@ -1,5 +1,5 @@
 import { createFrames, Button } from "frames.js/next";
-import { defaultImageOptions } from "@/app/config";
+import { APP_URL, defaultImageOptions } from "@/app/config";
 import { vercelURL } from "../utils";
 
 const frames = createFrames();
@@ -21,7 +21,7 @@ const handleRequest = frames(async (ctx) => {
       ],
       image: (
         <div tw="flex w-full h-full bg-[#020C17] text-white justify-center items-center">
-          VIEW DATA COVER
+          SHARE COVER
         </div>
       ),
       imageOptions: {
@@ -29,7 +29,7 @@ const handleRequest = frames(async (ctx) => {
       },
       buttons: [
         <Button key="b1" action="post" target="share">
-          VIEW DATA
+          VIEW
         </Button>,
       ],
     };
@@ -45,16 +45,16 @@ const handleRequest = frames(async (ctx) => {
           version: "vNext",
         },
       ],
-      image: <div>become AGI</div>,
+      image: `${APP_URL}/assets/cover.png`,
       imageOptions: {
         ...defaultImageOptions,
       },
       buttons: [
+        <Button key="b1" action="post" target="benchmarks">
+          BENCHMARKS
+        </Button>,
         <Button key="b1" action="post" target="game">
           LAUNCH
-        </Button>,
-        <Button key="b2" action="post" target="benchmarks">
-          BENCHMARKS
         </Button>,
       ],
     };
