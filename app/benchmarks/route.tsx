@@ -3,8 +3,35 @@ import { defaultImageOptions } from "@/app/config";
 import { fetchBenchmark } from "@/core/db/queries";
 import { fetchUserData } from "@/core/utils/fetch-social";
 import Benchmarks from "@/core/ui/benchmarks";
+import { sendEvent } from "@/core/analytics/pinata";
+import { openframes } from "frames.js/middleware";
 
-const frames = createFrames();
+const frames = createFrames({
+  middleware: [
+    openframes({
+      clientProtocol: {
+        id: "farcaster",
+        version: "vNext",
+      },
+      handler: {
+        isValidPayload: (body: JSON) => true,
+        getFrameMessage: async (body: JSON) => {
+          sendEvent(
+            "benchmark",
+            {
+              ...body,
+            },
+            "becomeagi",
+          );
+
+          return {
+            ...body,
+          };
+        },
+      },
+    }),
+  ],
+});
 
 // Function to fetch all users data in parallel
 async function fetchAllUsersData(users: any, token: string) {
@@ -46,7 +73,35 @@ function combineUserInfo(topUsers: any, fetchResults: any[]) {
 }
 
 const handleRequest = frames(async (ctx) => {
-  const benchmarks = await fetchBenchmark(ctx?.message?.requesterFid);
+  if (!ctx.message) {
+    return {
+      accepts: [
+        {
+          id: "farcaster",
+          version: "vNext",
+        },
+        {
+          id: "xmtp",
+          version: "vNext",
+        },
+      ],
+      image: (
+        <div tw="w-full h-full bg-[#020C17] text-white justify-center items-center">
+          NO DATA
+        </div>
+      ),
+      imageOptions: {
+        ...defaultImageOptions,
+      },
+      buttons: [
+        <Button key="b1" action="post">
+          REFRESH
+        </Button>,
+      ],
+    };
+  }
+
+  const benchmarks = await fetchBenchmark(ctx?.message.untrustedData.fid);
   const userData = await fetchAllUsersData(
     benchmarks.topUsers,
     process.env.PINATA_API_KEY!,
@@ -59,7 +114,7 @@ const handleRequest = frames(async (ctx) => {
 
   if (!isUserTop10) {
     const userData = await fetchUserData(
-      ctx?.message?.requesterFid,
+      ctx?.message.untrustedData.fid,
       process.env.PINATA_API_KEY!,
     );
 
@@ -86,7 +141,7 @@ const handleRequest = frames(async (ctx) => {
         topUsers={combinedData || []}
         isUserTop10={isUserTop10}
         loserData={loserData}
-        currentFid={ctx?.message?.requesterFid}
+        currentFid={ctx?.message.untrustedData.fid}
       />
     ),
     imageOptions: {
