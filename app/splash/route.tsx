@@ -45,7 +45,7 @@ const handleRequest = frames(async (ctx) => {
           version: "vNext",
         },
       ],
-      image: `${vercelURL()}/assets/cover.png`,
+      image: <div>become AGI</div>,
       imageOptions: {
         ...defaultImageOptions,
       },
