@@ -21,7 +21,7 @@ const handleRequest = frames(async (ctx) => {
       ],
       image: (
         <div tw="flex w-full h-full bg-[#020C17] text-white justify-center items-center">
-          SHARE COVER
+          VIEW DATA COVER
         </div>
       ),
       imageOptions: {
@@ -29,7 +29,7 @@ const handleRequest = frames(async (ctx) => {
       },
       buttons: [
         <Button key="b1" action="post" target="share">
-          VIEW
+          VIEW DATA
         </Button>,
       ],
     };
@@ -55,6 +55,9 @@ const handleRequest = frames(async (ctx) => {
         </Button>,
         <Button key="b1" action="post" target="game">
           LAUNCH
+        </Button>,
+        <Button key="b2" action="post" target="benchmarks">
+          BENCHMARKS
         </Button>,
       ],
     };
