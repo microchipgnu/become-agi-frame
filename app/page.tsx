@@ -19,11 +19,14 @@ export default function Home() {
         <div className="mt-2 mb-8 border-b border-customDarkBlue"></div>
 
         <h1 className="text-customLightBlue text-xl mb-2">GOAL</h1>
-        <p className="text-m mb-8">Become AGI by training your model.</p>
+        <p className="text-m mb-8">
+          Become <span className="text-customYellow">AGI</span> by training your
+          model.
+        </p>
 
         <h1 className="text-customLightBlue text-xl mb-2">TRAIN</h1>
         <p className="text-m mb-8">
-          In the currently available Dataset by exploring the 128 bytes in the
+          In the currently available Dataset by exploring the 32 bytes in the
           grid. Each byte has a different knowledge type (some rarer than
           others). The rarer the knowledge type, the more knowledge you receive.
         </p>
@@ -97,7 +100,8 @@ export default function Home() {
         <h1 className="text-customLightBlue text-xl mb-2">DATASET HEALTH</h1>
         <p className="text-m mb-8">
           While the Dataset is getting trained on by different models each byte
-          progressively deteriorates, until the Dataset gets refreshed.
+          progressively deteriorates, until the Dataset gets refreshed{" "}
+          <span className="text-bold text-customYellow">every hour</span>.
         </p>
 
         <h1 className="text-customLightBlue text-xl mb-4">
@@ -157,18 +161,19 @@ export default function Home() {
           <ul className="list-none space-y-2">
             <li>
               <span className="text-customLightBlue">{`A)`} </span>
-              <span>Like</span> <span className="text-customLightBlue">=</span>{" "}
-              force push to main and double the effect;
+              <span className="text-customYellow">Like</span>{" "}
+              <span className="text-customLightBlue">=</span> force push to main
+              and double the effect;
             </li>
             <li>
               <span className="text-customLightBlue">{`B)`} </span>
-              <span>Recast</span>{" "}
+              <span className="text-customYellow">Recast</span>{" "}
               <span className="text-customLightBlue">=</span> your model
               transmits the same data;
             </li>
             <li>
               <span className="text-customLightBlue">{`C)`} </span>
-              <span>Mutual Follow</span>{" "}
+              <span className="text-customYellow">Mutual Follow</span>{" "}
               <span className="text-customLightBlue">=</span> content is
               revealed;
             </li>
