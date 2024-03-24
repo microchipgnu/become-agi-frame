@@ -207,6 +207,11 @@ export default function Home() {
           </ul>
         </div>
       </div>
+      <img
+        src="/assets/bAGI-ORB-wide-crop.avif"
+        alt="Descriptive text"
+        className="w-full hidden sm:block"
+      />
     </div>
   );
 }
