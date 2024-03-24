@@ -38,6 +38,13 @@ const config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         customDark: "#020C17",
+        customLightBlue: "#6D88C7",
+        customDarkBlue: "#09376C",
+        customMediumBlue: "#051B32",
+        customYellow: "#D6FA58",
+        customGreen: "#4FCC4E",
+        customRed: "#FF5C5C",
+        customOrange: "#D7BB8E",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
