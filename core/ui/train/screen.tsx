@@ -137,6 +137,12 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
       ? user.points - NOISE_SLASH
       : user.points + points;
 
+  // Ensure userPoints is never below 0
+  userPoints = Math.max(0, userPoints);
+
+  // Ensure userPoints is never above 100
+  userPoints = Math.min(100, userPoints);
+
   const grid = Array.from({ length: gridRows }, () =>
     Array.from({ length: gridCols }, () => ({
       isNoise: false, // default value
