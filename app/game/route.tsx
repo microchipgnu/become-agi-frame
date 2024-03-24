@@ -9,6 +9,16 @@ const frames = createFrames();
 const handleRequest = frames(async (ctx) => {
   if (!ctx.message) {
     return {
+      accepts: [
+        {
+          id: "farcaster",
+          version: "vNext",
+        },
+        {
+          id: "xmtp",
+          version: "vNext",
+        },
+      ],
       image: (
         <div tw="w-full h-full bg-[#020C17] text-white justify-center items-center">
           NO DATA

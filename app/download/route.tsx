@@ -25,6 +25,16 @@ const handleRequest = frames(async (ctx) => {
   //   hasNoise: true
   // }
   return {
+    accepts: [
+      {
+        id: "farcaster",
+        version: "vNext",
+      },
+      {
+        id: "xmtp",
+        version: "vNext",
+      },
+    ],
     image: (
       <div tw="flex w-full h-full bg-[#020C17] text-white justify-center items-center">
         {requesterFid} SHARE IMAGE 2-INFINITY

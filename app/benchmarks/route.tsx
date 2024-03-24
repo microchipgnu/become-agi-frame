@@ -71,6 +71,16 @@ const handleRequest = frames(async (ctx) => {
   }
 
   return {
+    accepts: [
+      {
+        id: "farcaster",
+        version: "vNext",
+      },
+      {
+        id: "xmtp",
+        version: "vNext",
+      },
+    ],
     image: (
       <Benchmarks
         topUsers={combinedData || []}
