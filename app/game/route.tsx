@@ -1,10 +1,37 @@
-import { createFrames, Button } from "frames.js/next";
-import TrainInterface from "@/core/ui/train/screen";
-import { getOrCreateUserWithMap } from "@/core/db/queries";
 import { defaultImageOptions } from "@/app/config";
+import { sendEvent } from "@/core/analytics/pinata";
+import { getOrCreateUserWithMap } from "@/core/db/queries";
+import TrainInterface from "@/core/ui/train/screen";
 import { fetchUserData } from "@/core/utils/fetch-social";
+import { openframes } from "frames.js/middleware";
+import { Button, createFrames } from "frames.js/next";
 
-const frames = createFrames();
+const frames = createFrames({
+  middleware: [
+    openframes({
+      clientProtocol: {
+        id: "farcaster",
+        version: "vNext",
+      },
+      handler: {
+        isValidPayload: (body: JSON) => true,
+        getFrameMessage: async (body: JSON) => {
+          sendEvent(
+            "train",
+            {
+              ...body,
+            },
+            "becomeagi",
+          );
+
+          return {
+            ...body,
+          };
+        },
+      },
+    }),
+  ],
+});
 
 const handleRequest = frames(async (ctx) => {
   if (!ctx.message) {
@@ -36,7 +63,7 @@ const handleRequest = frames(async (ctx) => {
   }
 
   const { dataset, user } = await getOrCreateUserWithMap(
-    ctx?.message.requesterFid,
+    ctx?.message.untrustedData.fid,
   );
 
   const userData = await fetchUserData(user.fid, process.env.PINATA_API_KEY!);
