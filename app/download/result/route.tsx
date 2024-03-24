@@ -60,6 +60,7 @@ const handleRequest = frames(async (ctx) => {
     abilityToChanceAndReward[status].reward;
 
   // TODO: finish like, follow logic before incrementing and decrementing the points
+  // TODO: add airstack poap validation for increased points
   updatePoints(
     fid,
     status === "Noise" ? NOISE_SLASH : points,
