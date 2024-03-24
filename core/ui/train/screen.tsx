@@ -103,8 +103,8 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
 
   const points =
     byteStatusToColor(userCurrentRow?.accesses).reward *
+    // @ts-ignore
     abilityToChanceAndReward[userCurrentRow?.status].reward;
-
   updatePoints(
     user.fid,
     points,
