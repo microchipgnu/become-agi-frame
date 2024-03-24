@@ -1,5 +1,5 @@
 import { createFrames, Button } from "frames.js/next";
-import { getOrCreateUserWithMap } from "@/core/db/queries";
+import { fetchSingleData, getOrCreateUserWithMap } from "@/core/db/queries";
 import { APP_URL, defaultImageOptions } from "@/app/config";
 import { createShareHash } from "@/core/db/actions";
 
@@ -20,9 +20,7 @@ const handleRequest = frames(async (ctx) => {
   });
 
   // Manually encode the URL part that needs to be a value of the embeds[] parameter
-  const encodedUrlValue = encodeURIComponent(
-    `${APP_URL}/download?id=${shareHash}`,
-  );
+  const encodedUrlValue = encodeURIComponent(`${APP_URL}/share/${shareHash}`);
 
   // Construct the full URL and manually encode the brackets for the embeds[] parameter
   const shareFrameUrl = `https://warpcast.com/~/compose?embeds%5B%5D=${encodedUrlValue}`;
