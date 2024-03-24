@@ -285,7 +285,7 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                   </div>
                   <div tw="flex text-3xl text-[#6D88C7]">
                     {userCurrentRow.status === "Noise" ? (
-                      <div tw="flex text-[#FF5C5C]">- 10%</div>
+                      <div tw="flex text-[#FF5C5C]">- {NOISE_SLASH}%</div>
                     ) : (
                       <div tw="flex text-[#4FCC4E]">+ {points}%</div>
                     )}
