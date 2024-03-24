@@ -9,6 +9,16 @@ const frames = createFrames();
 const handleRequest = frames(async (ctx) => {
   if (!ctx.message) {
     return {
+      accepts: [
+        {
+          id: "farcaster",
+          version: "vNext",
+        },
+        {
+          id: "xmtp",
+          version: "vNext",
+        },
+      ],
       image: (
         <div tw="w-full h-full bg-[#020C17] text-white justify-center items-center">
           NO DATA
@@ -43,7 +53,7 @@ const handleRequest = frames(async (ctx) => {
     },
     buttons: [
       <Button key="b1" action="post" target="benchmark">
-        BENCHMARK
+        BENCHMARKS
       </Button>,
       <Button key="b3" action="post" target="share">
         DISTRIBUTE

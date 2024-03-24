@@ -9,6 +9,16 @@ const handleRequest = frames(async (ctx) => {
 
   if (isPosterSharing) {
     return {
+      accepts: [
+        {
+          id: "farcaster",
+          version: "vNext",
+        },
+        {
+          id: "xmtp",
+          version: "vNext",
+        },
+      ],
       image: (
         <div tw="flex w-full h-full bg-[#020C17] text-white justify-center items-center">
           SHARE COVER
@@ -25,13 +35,23 @@ const handleRequest = frames(async (ctx) => {
     };
   } else {
     return {
+      accepts: [
+        {
+          id: "farcaster",
+          version: "vNext",
+        },
+        {
+          id: "xmtp",
+          version: "vNext",
+        },
+      ],
       image: `${vercelURL()}/assets/cover.png`,
       imageOptions: {
         ...defaultImageOptions,
       },
       buttons: [
         <Button key="b1" action="post" target="benchmark">
-          BENCHMARK
+          BENCHMARKS
         </Button>,
         <Button key="b1" action="post" target="game">
           LAUNCH

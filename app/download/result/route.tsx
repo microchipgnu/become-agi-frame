@@ -26,6 +26,16 @@ const handleRequest = frames(async (ctx) => {
   const shareFrameUrl = `https://warpcast.com/~/compose?embeds%5B%5D=${encodedUrlValue}`;
 
   return {
+    accepts: [
+      {
+        id: "farcaster",
+        version: "vNext",
+      },
+      {
+        id: "xmtp",
+        version: "vNext",
+      },
+    ],
     image: (
       <div tw="flex flex-col w-full h-full bg-[#020C17] text-white justify-center items-center">
         <p>User {requesterFid} DISTRIBUTING DATA</p>

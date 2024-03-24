@@ -7,6 +7,16 @@ const handleRequest = frames(async (ctx) => {
   console.log("share ctx.message", ctx?.message);
   const { requesterFid } = ctx?.message || {};
   return {
+    accepts: [
+      {
+        id: "farcaster",
+        version: "vNext",
+      },
+      {
+        id: "xmtp",
+        version: "vNext",
+      },
+    ],
     image: (
       <div tw="flex flex-col w-full h-full bg-[#020C17] text-white justify-center items-center">
         <p>User {requesterFid}</p>
