@@ -22,7 +22,7 @@ const handleRequest = frames(async (ctx) => {
         HOME
       </Button>,
       <Button key="b2" action="post">
-        BENCHMARKS
+        BENCHMARKSS
       </Button>,
     ],
   };

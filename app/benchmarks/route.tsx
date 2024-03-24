@@ -1,8 +1,8 @@
 import { createFrames, Button } from "frames.js/next";
-import Benchmark from "@/core/ui/benchmark";
 import { defaultImageOptions } from "@/app/config";
 import { fetchBenchmark } from "@/core/db/queries";
 import { fetchUserData } from "@/core/utils/fetch-social";
+import Benchmarks from "@/core/ui/benchmarks";
 
 const frames = createFrames();
 
@@ -46,14 +46,14 @@ function combineUserInfo(topUsers: any, fetchResults: any[]) {
 }
 
 const handleRequest = frames(async (ctx) => {
-  const benchmark = await fetchBenchmark(ctx?.message?.requesterFid);
+  const benchmarks = await fetchBenchmark(ctx?.message?.requesterFid);
   const userData = await fetchAllUsersData(
-    benchmark.topUsers,
+    benchmarks.topUsers,
     process.env.PINATA_API_KEY!,
   );
-  const combinedData = combineUserInfo(benchmark.topUsers, userData!);
+  const combinedData = combineUserInfo(benchmarks.topUsers, userData!);
 
-  const isUserTop10 = Number(benchmark?.userPosition?.rank) < 11;
+  const isUserTop10 = Number(benchmarks?.userPosition?.rank) < 11;
 
   let loserData = undefined;
 
@@ -64,15 +64,15 @@ const handleRequest = frames(async (ctx) => {
     );
 
     loserData = {
-      rank: benchmark?.userPosition?.rank,
-      points: benchmark?.userPosition?.points,
+      rank: benchmarks?.userPosition?.rank,
+      points: benchmarks?.userPosition?.points,
       userData: userData?.data,
     };
   }
 
   return {
     image: (
-      <Benchmark
+      <Benchmarks
         topUsers={combinedData || []}
         isUserTop10={isUserTop10}
         loserData={loserData}
@@ -83,7 +83,7 @@ const handleRequest = frames(async (ctx) => {
       ...defaultImageOptions,
     },
     buttons: [
-      <Button key="b1" action="post" target="benchmark">
+      <Button key="b1" action="post" target="benchmarks">
         REFRESH
       </Button>,
       <Button key="b1" action="post" target="game">
