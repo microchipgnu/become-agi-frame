@@ -16,7 +16,7 @@ export async function generateMetadata() {
 
 export default function Home() {
   return (
-    <div className="bg-customDark text-white min-h-screen flex flex-col justify-top items-center">
+    <div className="bg-customDark text-white min-h-screen flex flex-col justify-top items-center p-4 sm:p-0">
       <img src="/becomeAGI.svg" alt="Logo" className="w-40 h-40 mb-8" />
 
       <div className="w-full max-w-2xl flex flex-col items-left">
