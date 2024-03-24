@@ -161,18 +161,18 @@ export default function Home() {
         <div className="bg-customDark text-white p-5">
           <ul className="list-none space-y-2">
             <li>
-              <span className="text-customLightBlue">A) </span>
+              <span className="text-customLightBlue">{`A)`} </span>
               <span>Like</span> <span className="text-customLightBlue">=</span>{" "}
               force push to main and double the effect;
             </li>
             <li>
-              <span className="text-customLightBlue">B) </span>
+              <span className="text-customLightBlue">{`B)`} </span>
               <span>Recast</span>{" "}
               <span className="text-customLightBlue">=</span> your model
               transmits the same data;
             </li>
             <li>
-              <span className="text-customLightBlue">C) </span>
+              <span className="text-customLightBlue">{`C)`} </span>
               <span>Mutual Follow</span>{" "}
               <span className="text-customLightBlue">=</span> content is
               revealed;
@@ -182,7 +182,7 @@ export default function Home() {
 
         <div className="bg-customMediumBlue border border-customLightBlue rounded-lg p-4 text-white">
           <p>
-            After performing an action don't forget to hit{" "}
+            After performing an action don`&apos;`t forget to hit{" "}
             <span className="font-bold text-customYellow">REFRESH</span> for the
             changes to apply.
           </p>
@@ -198,13 +198,13 @@ export default function Home() {
         <div className="bg-customDark text-white p-5">
           <ul className="list-none space-y-2">
             <li>
-              <span className="text-customLightBlue">A) </span>
+              <span className="text-customLightBlue">{`A)`} </span>
               <span className="text-customGreen">Knowledge</span>{" "}
               <span className="text-customLightBlue">=</span> data is rich and
               your model upgrades;
             </li>
             <li>
-              <span className="text-customLightBlue">B) </span>
+              <span className="text-customLightBlue">{`B)`} </span>
               <span className="text-customRed">Noise</span>{" "}
               <span className="text-customLightBlue">=</span> data is corrupted
               and your model downgrades;
