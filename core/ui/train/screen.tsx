@@ -112,6 +112,9 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
     userCurrentRow.status === "Noise" ? "decrement" : "increment",
   );
 
+  let userPoints =
+    userCurrentRow.status === "Noise" ? user.points - 10 : user.points + points;
+
   const grid = Array.from({ length: gridRows }, () =>
     Array.from({ length: gridCols }, () => ({
       isNoise: false, // default value
@@ -131,12 +134,12 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
       const colIndex = (row.id - 1) % gridCols;
 
       // @ts-ignore
-      grid[rowIndex][colIndex].isNoise = row.status === "Noise";
+      grid[rowIndex][colIndex].isNoise = row?.status === "Noise";
       // @ts-ignore
       grid[rowIndex][colIndex].isCurrentPosition =
-        row.position === userCurrentRow.position;
+        row?.position === userCurrentRow?.position;
       // @ts-ignore
-      grid[rowIndex][colIndex].accesses = row.accesses;
+      grid[rowIndex][colIndex].accesses = row?.accesses || 0;
     },
   );
 
@@ -144,7 +147,6 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
     <div tw="flex w-full h-full flex-col bg-[#020C17]">
       <div tw="flex flex-row flex-grow w-full items-center justify-between px-12">
         <div tw="flex justify-between">
-          {/* Dataset Grid */}
           <div tw="flex flex-col">
             {grid?.map((row, rowIndex) => (
               <div key={rowIndex} tw="flex mt-2">
@@ -152,15 +154,14 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                   <GridItem
                     key={cellIndex}
                     accesses={cell?.accesses || 0}
-                    isRed={cell.isNoise}
-                    isCurrentPosition={cell.isCurrentPosition}
+                    isRed={cell?.isNoise}
+                    isCurrentPosition={cell?.isCurrentPosition}
                   />
                 ))}
               </div>
             ))}
           </div>
 
-          {/* Data Stats */}
           <div tw="flex flex-col flex-grow border border-black justify-between ml-12 w-[572px]">
             <div tw="flex flex-col">
               <div tw="flex flex-col mb-6">
@@ -175,15 +176,6 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                   <Divider color="[#09376C]" />
                 </div>
                 <div tw="flex flex-col mb-2 mt-8">
-                  <div tw="flex items-center justify-between">
-                    <div tw="flex text-3xl text-[#6D88C7]">INTEGRITY</div>
-                    <div tw="flex text-3xl text-[#6D88C7]">
-                      <span tw="text-[#D7BB8E]">Pristine</span>=
-                      <span tw="text-[#D6FA58]">100%</span>
-                    </div>
-                  </div>
-                </div>
-                <div tw="flex flex-col mb-2">
                   <div tw="flex items-center justify-between">
                     <div tw="flex text-3xl text-[#6D88C7]">FRESH DATASET</div>
                     <div tw="flex text-3xl text-[#6D88C7]">09:05:02</div>
@@ -232,7 +224,7 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                   </div>
                 </div>
               </div>
-              <div tw="flex flex-col mb-2">
+              <div tw="flex flex-col mb-12">
                 <div tw="flex items-center justify-between">
                   <div tw="flex text-3xl text-[#6D88C7] justify-between">
                     INTEGRITY
@@ -256,6 +248,22 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                   </div>
                 </div>
               </div>
+              <Divider color="[#09376C]" />
+
+              <div tw="flex flex-col mb-2 mt-12">
+                <div tw="flex items-center justify-between">
+                  <div tw="flex text-3xl text-[#6D88C7] justify-between">
+                    UPDATE
+                  </div>
+                  <div tw="flex text-3xl text-[#6D88C7]">
+                    {userCurrentRow.status === "Noise" ? (
+                      <div tw="flex text-[#FF5C5C]">- 10%</div>
+                    ) : (
+                      <div tw="flex text-[#4FCC4E]">+ {points}%</div>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -264,18 +272,22 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
       {/* Bottom ProgressBar */}
       <div tw="p-12 w-full flex">
         <div tw="flex items-center w-full">
-          <img
-            src="https://wrpcd.net/cdn-cgi/image/fit=contain,f=auto,w=168/https%3A%2F%2Fi.imgur.com%2FhvaOPrU.jpg"
-            alt="user"
-            tw="h-20 w-20 mr-4 rounded"
-          />
+          {user?.userData?.pfp_url ? (
+            <img
+              src={user.userData.pfp_url}
+              alt="user"
+              tw="h-20 w-20 mr-4 rounded"
+            />
+          ) : (
+            <div tw="h-20 w-20 mr-4 rounded bg-[#09376C]"></div>
+          )}
           <div tw="flex h-full rounded items-center border flex-grow bg-[#051D38]">
             <div
               tw="bg-[#09376C] h-full rounded "
-              style={{ width: `${user.points}%` }}
+              style={{ width: `${userPoints}%` }}
             ></div>
             <div tw="ml-4 text-white flex text-[#D7BB8E] text-3xl">
-              {user.points.toString()}%
+              {userPoints.toString()}%
             </div>
           </div>
         </div>

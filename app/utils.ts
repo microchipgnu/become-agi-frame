@@ -15,5 +15,5 @@ export function currentURL(pathname: string): URL {
 export function vercelURL() {
   return process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
-    : undefined;
+    : "http://localhost:3000";
 }

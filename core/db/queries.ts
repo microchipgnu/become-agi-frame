@@ -135,10 +135,10 @@ export const fetchBenchmark = async (fid: number) => {
     LIMIT 10;
   `;
 
-  // Fetch the specific user's position
-  const FETCH_USER_POSITION = `
-    SELECT rank FROM (
-      SELECT fid, RANK() OVER (ORDER BY points DESC) as rank
+  // Modified to fetch the specific user's position and points
+  const FETCH_USER_POSITION_AND_POINTS = `
+    SELECT rank, points FROM (
+      SELECT fid, points, RANK() OVER (ORDER BY points DESC) as rank
       FROM becomeagi_users
     ) as ranked_users
     WHERE fid = $1;
@@ -146,7 +146,10 @@ export const fetchBenchmark = async (fid: number) => {
 
   try {
     const topUsersPromise = pool.query(FETCH_TOP_USERS);
-    const userPositionPromise = pool.query(FETCH_USER_POSITION, [fid]);
+    // Use the modified query here
+    const userPositionPromise = pool.query(FETCH_USER_POSITION_AND_POINTS, [
+      fid,
+    ]);
 
     // Use Promise.all to execute both queries concurrently
     const [topUsersResult, userPositionResult] = await Promise.all([
@@ -156,9 +159,10 @@ export const fetchBenchmark = async (fid: number) => {
 
     // Extract the rows from the query results
     const topUsers = topUsersResult.rows;
+    // Now includes points as well
     const userPosition = userPositionResult.rows[0]
-      ? userPositionResult.rows[0].rank
-      : "Not in leaderboard";
+      ? userPositionResult.rows[0]
+      : undefined;
 
     return {
       topUsers,

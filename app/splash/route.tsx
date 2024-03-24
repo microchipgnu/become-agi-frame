@@ -1,5 +1,6 @@
 import { createFrames, Button } from "frames.js/next";
 import { defaultImageOptions } from "@/app/config";
+import { vercelURL } from "../utils";
 
 const frames = createFrames();
 
@@ -24,15 +25,14 @@ const handleRequest = frames(async (ctx) => {
     };
   } else {
     return {
-      image: (
-        <div tw="flex w-full h-full bg-[#020C17] text-white justify-center items-center">
-          FRAME COVER
-        </div>
-      ),
+      image: `${vercelURL()}/assets/cover.png`,
       imageOptions: {
         ...defaultImageOptions,
       },
       buttons: [
+        <Button key="b1" action="post" target="benchmark">
+          BENCHMARK
+        </Button>,
         <Button key="b1" action="post" target="game">
           LAUNCH
         </Button>,
