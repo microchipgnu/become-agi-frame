@@ -48,11 +48,11 @@ const handleRequest = frames(async (ctx) => {
       ...defaultImageOptions,
     },
     buttons: [
-      <Button key="b1" action="link" target={shareFrameUrl}>
-        DISTRIBUTE
-      </Button>,
-      <Button key="b2" action="post" target="game">
+      <Button key="b1" action="post" target="game">
         HOME
+      </Button>,
+      <Button key="b2" action="link" target={shareFrameUrl}>
+        DISTRIBUTE
       </Button>,
     ],
   };

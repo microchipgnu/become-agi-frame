@@ -29,7 +29,7 @@ const handleRequest = frames(async (ctx) => {
       },
       buttons: [
         <Button key="b1" action="post">
-          LAUNCH
+          REFRESH
         </Button>,
       ],
     };
@@ -55,10 +55,10 @@ const handleRequest = frames(async (ctx) => {
       <Button key="b1" action="post" target="benchmarks">
         BENCHMARKS
       </Button>,
-      <Button key="b3" action="post" target="share">
+      <Button key="b2" action="post" target="share">
         DISTRIBUTE
       </Button>,
-      <Button key="b2" action="post">
+      <Button key="b3" action="post">
         TRAIN
       </Button>,
     ],
