@@ -1,4 +1,4 @@
-# Frames.js Starter Kit sdfsdf
+# become{AGI}
 
 This is a boilerplate repo to get started quickly with `frames.js`
 
@@ -7,7 +7,6 @@ This is a boilerplate repo to get started quickly with `frames.js`
 If running from the frames.js repository itself:
 
 - Run `yarn` from the repository root
-- Run `cd examples/framesjs-starter`
 
 1. Install dependencies `yarn install`
 
