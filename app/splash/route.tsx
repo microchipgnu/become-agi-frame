@@ -56,11 +56,7 @@ const handleRequest = frames(async (ctx) => {
         <Button key="b1" action="post" target="game">
           LAUNCH
         </Button>,
-        <Button
-          key="b2"
-          action="post_redirect"
-          target="https://www.becomeagi.com"
-        >
+        <Button key="b2" action="link" target="https://www.becomeagi.com">
           INSTRUCTION
         </Button>,
       ],
