@@ -1,5 +1,7 @@
 import { incrementAccesses, updatePoints } from "@/core/db/queries";
 
+const NOISE_SLASH = 5;
+
 const getTimeLeftForNewDataset = () => {
   const now = new Date();
   const nextHour = new Date();
@@ -126,12 +128,14 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
 
   updatePoints(
     user.fid,
-    userCurrentRow.status === "Noise" ? 10 : points,
+    userCurrentRow.status === "Noise" ? NOISE_SLASH : points,
     userCurrentRow.status === "Noise" ? "decrement" : "increment",
   );
 
   let userPoints =
-    userCurrentRow.status === "Noise" ? user.points - 10 : user.points + points;
+    userCurrentRow.status === "Noise"
+      ? user.points - NOISE_SLASH
+      : user.points + points;
 
   const grid = Array.from({ length: gridRows }, () =>
     Array.from({ length: gridCols }, () => ({
