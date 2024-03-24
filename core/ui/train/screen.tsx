@@ -39,15 +39,15 @@ const byteStatusToColor = (numberAccesses: number) => {
 };
 
 const abilityToChanceAndReward = {
-  Perception: { chance: 40, reward: 1 },
-  "Pattern Recognition": { chance: 10, reward: 2 },
-  "Decision Making": { chance: 10, reward: 2 },
-  Noise: { chance: 10, reward: -2 },
-  "Problem-Solving": { chance: 10, reward: 3 },
-  "Emotion Recognition": { chance: 10, reward: 3 },
-  Creativity: { chance: 4.5, reward: 4 },
-  "Adaptive Learning": { chance: 4.5, reward: 4 },
-  Strategy: { chance: 1, reward: 5 },
+  Perception: { chance: 40, reward: 1, rarity: "Common" },
+  "Pattern Recognition": { chance: 10, reward: 2, rarity: "Uncommon" },
+  "Decision Making": { chance: 10, reward: 2, rarity: "Uncommon" },
+  Noise: { chance: 10, reward: -10, rarity: "Uncommon" },
+  "Problem-Solving": { chance: 10, reward: 3, rarity: "Rare" },
+  "Emotion Recognition": { chance: 10, reward: 3, rarity: "Rare" },
+  Creativity: { chance: 4.5, reward: 4, rarity: "Very Rare" },
+  "Adaptive Learning": { chance: 4.5, reward: 4, rarity: "Very Rare" },
+  Strategy: { chance: 1, reward: 5, rarity: "Legendary" },
 };
 
 const GridItem = ({
@@ -101,9 +101,13 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
 
   incrementAccesses(userCurrentRow?.id);
 
+  const points =
+    byteStatusToColor(userCurrentRow?.accesses).reward *
+    abilityToChanceAndReward[userCurrentRow?.status].reward;
+
   updatePoints(
     user.fid,
-    1,
+    points,
     userCurrentRow.status === "Noise" ? "decrement" : "increment",
   );
 
@@ -172,7 +176,10 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                 <div tw="flex flex-col mb-2 mt-8">
                   <div tw="flex items-center justify-between">
                     <div tw="flex text-3xl text-[#6D88C7]">INTEGRITY</div>
-                    <div tw="flex text-3xl text-[#6D88C7]">Pristine-100%</div>
+                    <div tw="flex text-3xl text-[#6D88C7]">
+                      <span tw="text-[#D7BB8E]">Pristine</span>=
+                      <span tw="text-[#D6FA58]">100%</span>
+                    </div>
                   </div>
                 </div>
                 <div tw="flex flex-col mb-2">
@@ -199,7 +206,9 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                   <div tw="flex text-3xl text-[#6D88C7] justify-between">
                     TYPE
                   </div>
-                  <div tw="flex text-3xl text-[#6D88C7]">
+                  <div
+                    tw={`flex text-3xl ${userCurrentRow?.status === "Noise" ? "text-[#FF5C5C]" : "text-[#6D88C7]"}`}
+                  >
                     {userCurrentRow?.status}
                   </div>
                 </div>
@@ -209,7 +218,16 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                   <div tw="flex text-3xl text-[#6D88C7] justify-between">
                     RARITY
                   </div>
-                  <div tw="flex text-3xl text-[#6D88C7]">Common-30%</div>
+                  <div tw="flex text-3xl text-[#6D88C7]">
+                    {/** @ts-ignore */}
+                    <span tw="text-[#D7BB8E]">
+                      {abilityToChanceAndReward[userCurrentRow.status].rarity}
+                    </span>
+                    =
+                    <span tw="text-[#D6FA58]">
+                      {abilityToChanceAndReward[userCurrentRow.status].chance}%
+                    </span>
+                  </div>
                 </div>
               </div>
               <div tw="flex flex-col mb-2">
@@ -218,11 +236,13 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
                     INTEGRITY
                   </div>
                   <div tw="flex text-3xl text-[#6D88C7]">
-                    {" "}
-                    <div tw="flex text-3xl text-[#6D88C7]">
-                      {byteStatusToColor(userCurrentRow.accesses).name}=
-                      {byteStatusToColor(userCurrentRow.accesses).reward * 100}
-                    </div>
+                    <span tw="text-[#D7BB8E] capitalize">
+                      {byteStatusToColor(userCurrentRow.accesses).name}
+                    </span>
+                    =
+                    <span tw="text-[#D6FA58]">
+                      {byteStatusToColor(userCurrentRow.accesses).reward * 100}%
+                    </span>
                   </div>
                 </div>
               </div>
@@ -239,12 +259,14 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
             alt="user"
             tw="h-20 w-20 mr-4 rounded"
           />
-          <div tw="flex bg-blue-800 h-full rounded items-center border flex-grow bg-[#031222]">
+          <div tw="flex h-full rounded items-center border flex-grow bg-[#051D38]">
             <div
               tw="bg-[#09376C] h-full rounded "
               style={{ width: `${user.points}%` }}
             ></div>
-            <div tw="ml-4 text-white flex">{user.points.toString()}</div>
+            <div tw="ml-4 text-white flex text-[#D7BB8E] text-3xl">
+              {user.points.toString()}%
+            </div>
           </div>
         </div>
       </div>

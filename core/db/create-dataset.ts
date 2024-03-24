@@ -51,8 +51,8 @@ const getRandomRarity = (): Rarity => {
 
 const getAbilityBasedOnRarity = (rarityId: string): string => {
   const mapping: { [key: string]: string[] } = {
-    "0x1": ["Perception"], // Common
-    "0x2": ["Pattern Recognition", "Decision Making", "Noise"], // Uncommon
+    "0x1": ["Perception", "Noise"], // Common
+    "0x2": ["Pattern Recognition", "Decision Making"], // Uncommon
     "0x3": ["Problem-Solving", "Emotion Recognition"], // Rare
     "0x4": ["Creativity", "Adaptive Learning"], // Very Rare
     "0x5": ["Strategy"], // Legendary

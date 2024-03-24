@@ -23,7 +23,7 @@ const CREATE_USER_TABLE = `
   CREATE TABLE IF NOT EXISTS becomeagi_users (
     id SERIAL PRIMARY KEY,
     fid INTEGER NOT NULL UNIQUE,
-    points INTEGER NOT NULL DEFAULT 0,
+    points REAL NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 `;
@@ -172,11 +172,14 @@ export const fetchBenchmark = async (fid: number) => {
 
 export const updatePoints = async (
   fid: number,
-  points: number,
+  points: number, // Assumed to be positive for increment, negative for decrement
   operation: "increment" | "decrement",
 ) => {
+  // Determine the operation and prepare the SQL accordingly
   const operationSQL =
-    operation === "increment" ? "points + $1" : "points - $1";
+    operation === "increment"
+      ? "GREATEST(points + $1, 0)" // Ensures the result is never less than 0
+      : "GREATEST(points - ABS($1), 0)"; // Use ABS to ensure decrement is positive, and result is never less than 0
 
   const UPDATE_USER_POINTS = `
     UPDATE becomeagi_users
@@ -261,5 +264,9 @@ export const getOrCreateUserWithMap = async (fid: number) => {
 // console.log(await fetchCurrentDataset())
 // console.table(await dropDatasetTable())
 // console.table(await createDatasetTable())
+
 // await dropUserTable()
 // await createUserTable()
+// await dropDatasetTable()
+// await createDatasetTable()
+// await createAndStoreDataset()
