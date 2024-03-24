@@ -4,7 +4,7 @@ import * as fs from "fs";
 const { VERCEL_URL } = process.env;
 
 export const APP_URL = VERCEL_URL
-  ? `https://${VERCEL_URL}`
+  ? `https://becomeagi.com`
   : "http://localhost:3000";
 
 const fontRegularPath = join(process.cwd(), "./app/FiraCode-Regular.ttf");
