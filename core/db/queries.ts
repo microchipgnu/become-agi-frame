@@ -276,6 +276,23 @@ export const getOrCreateUserWithMap = async (fid: number) => {
   }
 };
 
+export const decrementPointsForAllUsers = async (decrementValue: number) => {
+  const DECREMENT_POINTS_QUERY = `
+    UPDATE becomeagi_users
+    SET points = GREATEST(points - $1, 0);
+  `;
+
+  try {
+    await pool.query(DECREMENT_POINTS_QUERY, [decrementValue]);
+    console.log(
+      `Successfully decremented points by ${decrementValue} for all users.`,
+    );
+  } catch (error) {
+    console.error("Error decrementing points for all users:", error);
+    throw error;
+  }
+};
+
 // console.log(await createAndStoreDataset())
 // console.table(await fetchCurrentDataset())
 // console.log(await fetchCurrentDataset())

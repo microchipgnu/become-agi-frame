@@ -1,4 +1,7 @@
-import { createAndStoreDataset } from "@/core/db/queries";
+import {
+  createAndStoreDataset,
+  decrementPointsForAllUsers,
+} from "@/core/db/queries";
 
 export const GET = async (req: Request, res: Response) => {
   if (
@@ -8,5 +11,6 @@ export const GET = async (req: Request, res: Response) => {
   }
 
   await createAndStoreDataset();
+  await decrementPointsForAllUsers(0.25);
   return new Response("OK");
 };
