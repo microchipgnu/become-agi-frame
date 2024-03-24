@@ -98,6 +98,7 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
   const rows = dataset?.rows;
   const gridRows = 8;
   const gridCols = 4;
+  const segmentSize = gridRows * gridCols;
 
   incrementAccesses(userCurrentRow?.id);
 
@@ -130,8 +131,12 @@ const TrainInterface = ({ dataset, user }: { dataset: any; user: any }) => {
       position: string;
       accesses: number;
     }) => {
-      const rowIndex = Math.floor((row.id - 1) / gridCols);
-      const colIndex = (row.id - 1) % gridCols;
+      const normalizedId =
+        row.id % segmentSize === 0
+          ? segmentSize - 1
+          : (row.id % segmentSize) - 1;
+      const rowIndex = Math.floor(normalizedId / gridCols);
+      const colIndex = normalizedId % gridCols;
 
       // @ts-ignore
       grid[rowIndex][colIndex].isNoise = row?.status === "Noise";
