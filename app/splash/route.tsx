@@ -50,7 +50,7 @@ const handleRequest = frames(async (ctx) => {
         ...defaultImageOptions,
       },
       buttons: [
-        <Button key="b1" action="post" target="benchmark">
+        <Button key="b1" action="post" target="benchmarks">
           BENCHMARKS
         </Button>,
         <Button key="b1" action="post" target="game">

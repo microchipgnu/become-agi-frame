@@ -1,63 +1,4 @@
-const mockData = [
-  {
-    id: "001",
-    handle: "@microchipgnu",
-    progress: "100%",
-  },
-  {
-    id: "002",
-    handle: "@microchipgnu",
-    progress: "100%",
-  },
-  {
-    id: "003",
-    handle: "@microchipgnu",
-    progress: "100%",
-  },
-  {
-    id: "004",
-    handle: "@microchipgnu",
-    progress: "100%",
-  },
-  {
-    id: "005",
-    handle: "@microchipgnu",
-    progress: "100%",
-  },
-  {
-    id: "006",
-    handle: "@microchipgnu",
-    progress: "100%",
-  },
-  {
-    id: "007",
-    handle: "@microchipgnu",
-    progress: "100%",
-  },
-  {
-    id: "008",
-    handle: "@microchipgnu",
-    progress: "100%",
-  },
-  {
-    id: "009",
-    handle: "@microchipgnu",
-    progress: "100%",
-  },
-  {
-    id: "010",
-    handle: "@microchipgnu",
-    progress: "100%",
-  },
-];
-
-const mockUserData = {
-  id: "189",
-  handle: "@microchipgnu",
-  progress: "100%",
-};
-
-const Benchmark = ({
+const Benchmarks = ({
   topUsers,
   isUserTop10,
   loserData,
@@ -95,7 +36,7 @@ const Benchmark = ({
                 <div tw="flex text-[#6D88C7]">
                   {data.rank.toString().padStart(3, "0")}
                 </div>
-                <img src={data.pfpUrl} tw="w-12 h-12 rounded ml-8" />
+                <img src={data.pfpUrl} alt="user" tw="w-12 h-12 rounded ml-8" />
                 <div
                   tw={`flex ml-8 ${currentFid === data.fid ? "text-white" : "text-[#D7BB8E]"}`}
                 >
@@ -117,6 +58,7 @@ const Benchmark = ({
               </div>
               <img
                 src={loserData?.userData?.pfp_url}
+                alt="loser"
                 tw="w-12 h-12 rounded ml-8"
               />
               <div tw="flex text-white font-bold ml-8">
@@ -131,4 +73,4 @@ const Benchmark = ({
   );
 };
 
-export default Benchmark;
+export default Benchmarks;

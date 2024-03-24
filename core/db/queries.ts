@@ -169,7 +169,7 @@ export const fetchBenchmark = async (fid: number) => {
       userPosition,
     };
   } catch (error) {
-    console.error("Error fetching benchmark data:", error);
+    console.error("Error fetching benchmarks data:", error);
     throw error;
   }
 };
