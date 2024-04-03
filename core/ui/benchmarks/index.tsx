@@ -34,13 +34,21 @@ const Benchmarks = ({
             >
               <div tw="flex">
                 <div tw="flex text-[#6D88C7]">
-                  {data.rank.toString().padStart(3, "0")}
+                  {data?.rank?.toString()?.padStart(3, "0")}
                 </div>
-                <img src={data.pfpUrl} alt="user" tw="w-12 h-12 rounded ml-8" />
+                {data?.pfpUrl ? (
+                  <img
+                    src={data?.pfpUrl}
+                    alt="user"
+                    tw="w-12 h-12 rounded ml-8"
+                  />
+                ) : (
+                  <div tw="w-12 h-12 ml-8 rounded bg-[#6D88C7]" />
+                )}
                 <div
                   tw={`flex ml-8 ${currentFid === data.fid ? "text-white" : "text-[#D7BB8E]"}`}
                 >
-                  @{data.username}
+                  @{data?.username}
                 </div>
               </div>
               <div tw="flex text-[#D6FA58]">
@@ -56,18 +64,22 @@ const Benchmarks = ({
           <div tw="flex justify-between items-center w-full h-12 my-2">
             <div tw="flex">
               <div tw="flex text-[#6D88C7]">
-                {loserData?.rank.toString().padStart(3, "0")}
+                {loserData?.rank?.toString()?.padStart(3, "0") || "999"}
               </div>
-              <img
-                src={loserData?.userData?.pfp_url}
-                alt="loser"
-                tw="w-12 h-12 rounded ml-8"
-              />
+              {loserData?.userData?.pfp_url ? (
+                <img
+                  src={loserData?.userData?.pfp_url}
+                  alt="loser"
+                  tw="w-12 h-12 rounded ml-8"
+                />
+              ) : (
+                <div tw="w-12 h-12 ml-8 rounded bg-[#6D88C7]" />
+              )}
               <div tw="flex text-white font-bold ml-8">
                 @{loserData?.userData?.username}
               </div>
             </div>
-            <div tw="flex text-[#D6FA58]">{loserData?.points}%</div>
+            <div tw="flex text-[#D6FA58]">{loserData?.points || 0}%</div>
           </div>
         )}
       </div>

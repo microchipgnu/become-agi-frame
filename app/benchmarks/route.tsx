@@ -36,7 +36,7 @@ const frames = createFrames({
 // Function to fetch all users data in parallel
 async function fetchAllUsersData(users: any, token: string) {
   const promises = users.map((user: { fid: number }) =>
-    fetchUserData(user.fid, token),
+    fetchUserData(user?.fid, token),
   );
   try {
     const results = await Promise.all(promises);
@@ -50,7 +50,7 @@ async function fetchAllUsersData(users: any, token: string) {
 function combineUserInfo(topUsers: any, fetchResults: any[]) {
   return topUsers.map((user: { fid: any; rank: any; points: any }) => {
     const fetchData = fetchResults.find(
-      (result) => result.data.fid === user.fid,
+      (result) => result?.data.fid === user?.fid,
     );
     if (fetchData) {
       return {
@@ -64,11 +64,11 @@ function combineUserInfo(topUsers: any, fetchResults: any[]) {
     }
     // If no matching data is found, return some default or partial data
     return {
-      rank: user.rank,
-      fid: user.fid,
+      rank: user?.rank,
+      fid: user?.fid,
       pfpUrl: undefined,
       username: undefined,
-      points: user.points,
+      points: user?.points,
     };
   });
 }
